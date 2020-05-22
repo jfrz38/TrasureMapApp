@@ -15,8 +15,26 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item  *ngFor="let game of gamesPlayed" [routerLink]="['/partida','jugado', '']" 
+<ion-content *ngIf="gamesPlayed">
+  <div style="max-width: 75%;" *ngIf="gamesPlayed.length==0; else mostrarResultados">
+
+    <div class="pirata">
+      <div class="speech-bubble">
+        <ion-label color="light" style="font-weight: bold;">
+          Parece que no hay nada que mostrar.
+          Completa un juego y vuelve aquí.
+        </ion-label>
+        
+      </div>
+      <img src="../../assets/images/pirata.png" class="imgPirata"/>
+      <div>
+        
+      </div>
+    </div>
+
+  </div>
+  <ng-template #mostrarResultados >
+  <ion-item *ngFor="let game of gamesPlayed" [routerLink]="['/partida','jugado', '']" 
   [queryParams]="{date: game.date, score:game.score, response:game.response, solution:game.game.solution, title: game.game.title, bound:game.game.bound,points:game.game.points,imageURL:game.game.imageURL,description:game.game.description}">
     <ion-thumbnail slot="start">
       <img [src]="game.game.imageURL">
@@ -24,4 +42,5 @@
     <ion-label>{{game.game.title}} - {{game.game.points}} puntos</ion-label>
     <ion-icon *ngIf=!isMobile name="arrow-forward" slot="end"></ion-icon>
   </ion-item>
+</ng-template>
 </ion-content>

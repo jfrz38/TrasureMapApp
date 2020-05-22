@@ -14,7 +14,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="gamesToPlay">
+  <div style="max-width: 75%;" *ngIf="gamesToPlay.length==0; else mostrarResultados">
+
+    <div class="pirata">
+      <div class="speech-bubble">
+        <ion-label color="light" style="font-weight: bold;">
+          Parece que no hay nada que mostrar.
+          Espera a que alguien cree un juego o créalo tú mismo
+        </ion-label>
+        
+      </div>
+      <img src="../../assets/images/pirata.png" class="imgPirata"/>
+      <div>
+        
+      </div>
+    </div>
+
+  </div>
+  <ng-template #mostrarResultados>
   <ion-item  *ngFor="let game of gamesToPlay" [routerLink]="['/partida','jugar', game.id] ">
     <ion-thumbnail slot="start">
       <img [src]="game.data.imageURL">
@@ -22,4 +40,5 @@
     <ion-label>{{game.data.title}} - {{game.data.points}} puntos</ion-label>
     <ion-icon *ngIf=!isMobile name="arrow-forward" slot="end"></ion-icon>
   </ion-item>
+</ng-template>
 </ion-content>

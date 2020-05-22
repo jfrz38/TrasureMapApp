@@ -93,7 +93,7 @@ export class JuegoPage implements OnInit {
   id: String;
   //cameraPhoto: CameraPhoto
   cameraPhoto = ''
-  imageURL:string = ''
+  imageURL: string = ''
 
   ngOnInit() {
     this.image = this.sanitizer.bypassSecurityTrustUrl('../../assets/images/empty-image.png')
@@ -106,23 +106,12 @@ export class JuegoPage implements OnInit {
         this.getGameFromDB()
 
       }
-    } else if (this.type == 'jugar') {
-      this.getGameFromDB()
-    }/*else if(this.type == 'propio'){
-      this.type = 'create';
-      this.getGameFromDB()
-    }*/else {
-      //jugado
-      this.game = JSON.parse(
-        JSON.stringify(
-          this.router.getCurrentNavigation().extractedUrl.queryParams))
-
-    }
+    } 
 
     this.resetFields(this.type)
     this.formOK = true;
 
-    if (this.game.imageURL.startsWith('data')) this.photoEnabled = true;
+    //if (this.game.imageURL.startsWith('data')) this.photoEnabled = true;
 
   }
 
@@ -282,11 +271,7 @@ export class JuegoPage implements OnInit {
 
   async takePhoto() {
 
-
-    //console.log("pltaforma= ",this.platform.platforms())
-    //if(this.platform.platforms().includes("mobile")){
-      //console.log("aa")
-      const image = await Plugins.Camera.getPhoto({
+    const image = await Plugins.Camera.getPhoto({
       quality: 100,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
@@ -294,24 +279,11 @@ export class JuegoPage implements OnInit {
     });
     this.cameraPhoto = image.dataUrl;
     this.image = image.dataUrl
-      
-    //}else{
-    /*  
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
 
-    this.camera.getPicture(options).then((imageData) => {
-      this.cameraPhoto = 'data:image/jpeg;base64,' + imageData;
-  })*/
-    //}
   }
 
-  insertedURL(){
-    if(this.imageURL='')return;
+  insertedURL() {
+    if (this.imageURL == '') return;
     this.image = this.imageURL;
   }
 

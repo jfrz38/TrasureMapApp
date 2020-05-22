@@ -6,3 +6,43 @@
       --background: rgba(228,235,235,0.5);
       --border-color: black;
   }
+
+  /******PIRATA*******/
+
+.pirata{
+  position: absolute;
+  right:    0;
+  top:   10px;
+  max-height: 75%;
+}
+
+.imgPirata{
+  width: 75%;
+  position: absolute;
+  right: 0;
+}
+.speech-bubble {
+  margin-left: 15%;
+  margin-right: 15%;
+	position: relative;
+  background: rgb(0,0,0,0.5);
+  border: .1px transparent;
+  border-radius: .4em;
+  text-align: center;
+  padding: .4em;
+}
+.speech-bubble:after {
+
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 0.625em solid transparent;
+	border-top-color: rgb(0,0,0,0.5);//#121212;
+  border-bottom: 0;
+  border-right: 0;
+	margin-left: -0.625em;
+	margin-bottom: -0.625em;
+}
