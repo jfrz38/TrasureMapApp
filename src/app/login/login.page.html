@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-buttons slot="start"> 
+    <ion-back-button></ion-back-button> 
+  </ion-buttons>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form class="form" [formGroup]="formValidation" (ngSubmit)="tryLogin(formValidation.value)"> 
+    <ion-item>
+      <ion-label class="label-title">Introduzca sus datos para acceder a la aplicación:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Email: </ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+    <div> 
+      <ng-container *ngFor="let validation of formValidationMessages.email">
+        <div class="error-message" *ngIf="formValidation.get('email').hasError(validation.type) && (formValidation.get('email').dirty || formValidation.get('email').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Contraseña: </ion-label>
+      <ion-input type="password"  formControlName="password"></ion-input>
+    </ion-item>
+    <div> 
+      <ng-container *ngFor="let validation of formValidationMessages.password">
+        <div class="error-message" *ngIf="formValidation.get('password').hasError(validation.type) && (formValidation.get('password').dirty || formValidation.get('password').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="div-button-login"> 
+      <ion-button type="submit" [disabled]="!formValidation.valid">Iniciar sesión</ion-button>
+    </div>
+    <div class="div-label-error"> 
+     <ion-label class="error-message">{{ errorMessage }}</ion-label>
+    </div>
+  </form>
+
+</ion-content>
+

@@ -1,0 +1,56 @@
+.texto {
+  position: absolute;
+  right: 0;
+  top: 5%;
+}
+
+.loroPirata {
+  width: 50%;
+  position: absolute;
+  right: 0;
+}
+.footerText{
+    color: black;
+    font-weight: bold;
+}
+.map{
+    max-width:50vw;
+    max-height:50vh;
+}
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    min-width: 80vw
+  } 
+
+.speech-bubble {
+  margin-left: 15%;
+  margin-right: 15%;
+  position: relative;
+  background: #121212; //#B7B7B7;
+  border: 0.1px transparent;
+  border-radius: 0.4em;
+  text-align: center;
+  padding: 0.4em;
+}
+.speech-bubble:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 0.625em solid transparent;
+  border-top-color: #121212;
+  border-bottom: 0;
+  border-right: 0;
+  margin-left: -0.625em;
+  margin-bottom: -0.625em;
+}
+
+ion-content {
+  --background: url('../../assets/images/background.jpg') no-repeat center/cover fixed;
+}

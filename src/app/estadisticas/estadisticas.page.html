@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"> 
+      <ion-back-button></ion-back-button> 
+    </ion-buttons>
+    
+    <ion-title>Estadísticas</ion-title>
+    <ion-buttons slot="end">    
+      <ion-button [routerLink]="['/']" style="margin: 20px;">
+        <ion-icon name="home"></ion-icon>
+        <ion-label style="margin:4px">Inicio</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="centered">
+    <ion-card>
+      
+      <img class="map" src="../../assets/images/treasure-map.png" />
+      <ion-item>
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label style="margin-left: 5px;">Nombre: {{valores.name}}</ion-label>
+        
+      </ion-item>
+      <ion-item>
+        <ion-icon name="trophy-outline"></ion-icon>
+        <ion-label style="margin-left: 5px;">Puntos: {{valores.puntos}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <ion-label style="margin-left: 5px;">Partidas jugadas: {{valores.gamesPlayed.length}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="create-outline"></ion-icon>
+        <ion-label style="margin-left: 5px;">Partidas creadas: {{valores.gamesCreated.length}}</ion-label>
+      </ion-item>
+    <ion-card-content>
+      <ion-label class="footerText">¡SIGUE DIVIRTIÉNDOTE BUSCANDO EL TESORO ESCONDIDO!</ion-label >
+    </ion-card-content>
+    </ion-card>
+  </div>
+<!--
+  <div class="texto">
+    <ion-label color="light" style="font-weight: bold;">
+      Hola {{valores.name}}, estas son tus estadísticas
+    </ion-label>
+    <div class="speech-bubble"></div>
+    <img src="../../assets/images/loro-pirata.png" class="loroPirata" />
+  </div>
+-->
+  
+</ion-content>

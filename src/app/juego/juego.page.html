@@ -1,0 +1,232 @@
+<!--<ion-header>
+  <ion-toolbar>
+    <ion-title>juego</ion-title>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content>
+  <div style="overflow: auto;">
+    <div class="left" style="float: left;">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+        <ion-label>Volver atrás</ion-label>
+      </ion-button>
+    </div>
+
+    <div class="right" style="float: right; margin-right: 10px;">
+      <ion-buttons *ngIf="type=='create'">
+        <ion-icon
+          style="font-size: xx-large;"
+          name="camera-reverse-outline"
+        ></ion-icon>
+        <ion-toggle [(ngModel)]="photoEnabled"></ion-toggle>
+        <ion-label>Cámara</ion-label>
+      </ion-buttons>
+    </div>
+
+    <!--<ion-buttons slot="start"> 
+      <ion-back-button></ion-back-button> 
+    </ion-buttons> -->
+  </div>
+
+  <!-- CREAR -->
+  <ng-container *ngIf="type=='create' || type==='propio'">
+    <form
+      *ngIf="formOK"
+      class="form"
+      [formGroup]="formValidation"
+      (ngSubmit)="onSubmit(formValidation.value)"
+    >
+      <ion-card>
+        <img
+          *ngIf="photoEnabled"
+          (click)="takePhoto()"
+          class="img"
+          [src]="image"
+        />
+        <img *ngIf="!photoEnabled" class="img" [src]="image" />
+        <ion-item *ngIf="!photoEnabled">
+          <div style="display: flex; align-items: center; margin-bottom: 4px;">
+            <ion-icon name="link-outline"></ion-icon>
+            <ion-label style="margin-left: 5px;" position="floating"
+              >URL</ion-label
+            >
+          </div>
+          <ion-input
+            (ionBlur)="insertedURL()"
+            [(ngModel)]="imageURL"
+            value="{{game.imageURL}}"
+            formControlName="image"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <div style="display: flex; align-items: center; margin-bottom: 4px;">
+            <ion-icon name="information-outline"></ion-icon>
+            <ion-label style="margin-left: 5px;" position="floating"
+              >Título</ion-label
+            >
+          </div>
+          <ion-input value="{{game.title}}" formControlName="title"></ion-input>
+        </ion-item>
+        <!-- Error título -->
+        <ng-container *ngFor="let validation of formValidationMessages.title">
+          <div
+            class="error-message"
+            *ngIf="(formValidation.get('title').hasError(validation.type) && (formValidation.get('title').dirty || formValidation.get('title').touched))"
+          >
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <ion-item>
+          <div style="display: flex; align-items: center; margin-bottom: 4px;">
+            <ion-icon name="document-text-outline"></ion-icon>
+            <ion-label style="margin-left: 5px;" position="stacked"
+              >Descripción</ion-label
+            >
+          </div>
+          <ion-textarea
+            value="{{game.description}}"
+            formControlName="description"
+          ></ion-textarea>
+        </ion-item>
+        <!-- Error descripción -->
+        <ng-container
+          *ngFor="let validation of formValidationMessages.description"
+        >
+          <div
+            class="error-message"
+            *ngIf="(formValidation.get('description').hasError(validation.type) && (formValidation.get('description').dirty || formValidation.get('description').touched))"
+          >
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <ion-item>
+          <ion-icon name="trophy-outline"></ion-icon>
+          <ion-label style="margin-left: 5px;">Puntos</ion-label>
+          <ion-input
+            value="{{game.points}}"
+            type="number"
+            formControlName="points"
+          ></ion-input>
+        </ion-item>
+        <!-- Error puntos -->
+        <ng-container *ngFor="let validation of formValidationMessages.points">
+          <div
+            class="error-message"
+            *ngIf="(formValidation.get('points').hasError(validation.type) && (formValidation.get('points').dirty || formValidation.get('points').touched))"
+          >
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <!-- Límite -->
+        <ion-item>
+          <ion-icon name="alert-outline"></ion-icon>
+          <ion-label style="margin-left: 5px;">Límite del mapa: </ion-label>
+          <ion-label>X</ion-label>
+          <ion-input
+            value="{{game.bound[0]}}"
+            type="number"
+            formControlName="boundX"
+          ></ion-input>
+          <ion-label>Y</ion-label>
+          <ion-input
+            value="{{game.bound[1]}}"
+            type="number"
+            formControlName="boundY"
+          ></ion-input>
+        </ion-item>
+        <!-- Error límite -->
+        <div>
+          <ng-container
+            *ngFor="let validation of formValidationMessages.boundX"
+          >
+            <div
+              class="error-message"
+              *ngIf="(formValidation.get('boundX').hasError(validation.type) && (formValidation.get('boundX').dirty || formValidation.get('boundX').touched))"
+            >
+              {{ validation.message }}
+            </div>
+          </ng-container>
+          <ng-container
+            *ngFor="let validation of formValidationMessages.boundY"
+          >
+            <div
+              class="error-message"
+              *ngIf="(formValidation.get('boundY').hasError(validation.type) && (formValidation.get('boundY').dirty || formValidation.get('boundY').touched))"
+            >
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Solución -->
+        <ion-item>
+          <ion-icon name="map-outline"></ion-icon>
+          <ion-label style="margin-left: 5px;">Solución: </ion-label>
+          <ion-label>X:</ion-label>
+          <ion-input
+            value="{{game.solution[0]}}"
+            type="number"
+            formControlName="solutionX"
+          ></ion-input>
+          <ion-label>Y:</ion-label>
+          <ion-input
+            value="{{game.solution[1]}}"
+            type="number"
+            formControlName="solutionY"
+          ></ion-input>
+        </ion-item>
+        <!-- Error solución -->
+        <div>
+          <ng-container
+            *ngFor="let validation of formValidationMessages.solutionX"
+          >
+            <div
+              class="error-message"
+              *ngIf="(formValidation.get('solutionX').hasError(validation.type) && (formValidation.get('solutionX').dirty || formValidation.get('solutionX').touched))"
+            >
+              {{ validation.message }}
+            </div>
+          </ng-container>
+          <ng-container
+            *ngFor="let validation of formValidationMessages.solutionY"
+          >
+            <div
+              class="error-message"
+              *ngIf="(formValidation.get('solutionY').hasError(validation.type) && (formValidation.get('solutionY').dirty || formValidation.get('solutionY').touched)) "
+            >
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-card-content>
+          <div class="div-label-error">
+            <ion-label class="error-message-insert"
+              >{{ errorMessage }}</ion-label
+            >
+          </div>
+          <ng-template [ngIf]="type=='create'" [ngIfElse]="juegoPropio">
+            <ion-button
+              style="float: right; margin-bottom: 10px;"
+              type="submit"
+              [disabled]="!formValidation.valid"
+              >Crear juego</ion-button
+            >
+          </ng-template>
+          <ng-template #juegoPropio>
+            <ion-button
+              style="float: right; margin-bottom: 10px;"
+              type="submit"
+              [disabled]="!formValidation.valid"
+              >Editar juego</ion-button
+            >
+            <ion-button class="delete-button" (click)="deleteAlertController()"
+              >Eliminar</ion-button
+            >
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </ng-container>
+</ion-content>

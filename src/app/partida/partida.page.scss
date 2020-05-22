@@ -1,0 +1,21 @@
+ion-button {
+    --background: rgba(228, 235, 235, 0.5);
+    --color: black;
+  }
+  
+  ion-content {
+    --background: url("../../assets/images/background.jpg") no-repeat center/cover
+      fixed;
+  }
+
+  .map{
+    max-width:80vw;
+    max-height:80vh;
+    display: block;
+    margin: 0 auto;
+}
+
+.centered {
+  left: 50%;
+} 
+

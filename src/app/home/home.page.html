@@ -1,20 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div id="top" (click)="goToGestion()">
+    <div *ngIf="!isUser" class="img_overlay">
+    </div>
+    <div *ngIf="isUser" class="centered">
+      
+      <!-- <ion-button [routerLink]="['/gestion']">Gestion</ion-button> -->
+      <h1 class="heading heading--stroke heading--shadow">Gestión</h1>
+    </div>
+    
   </div>
-</ion-content>
+  
+  <div id="bottom" (click)="goToParticipar()">
+    <div *ngIf="!isUser" class="img_overlay">
+    </div>
+    <div *ngIf="isUser" class="centered">
+      <h1 class="heading heading--stroke heading--shadow">Jugar</h1>
+      <!-- <ion-button [routerLink]="['/participar']">Entrar</ion-button> -->
+    </div>
+
+
+    
+    
+  </div> 
+
+  <div class="login" *ngIf="!isUser">
+    <div class="speech-bubble">
+      <ion-label color="light" style="font-weight: bold;">
+        Parece que no eres un usuario. Inicia sesión o registrate.
+      </ion-label>
+
+      <ion-button class = "loginButtons" [routerLink]="['/login']">
+        <ion-icon name="log-in-outline"></ion-icon>
+        <ion-label style="margin:10px">Identificarse</ion-label>
+      </ion-button>
+
+      <ion-button class = "loginButtons" [routerLink]="['/singup']">
+        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-label style="margin:10px">Registrarse</ion-label>
+      </ion-button>
+      
+    </div>
+    <img src="../../assets/images/loro-pirata2.png" class="loroPirata"/>
+    <div>
+      
+    </div>
+  </div>
