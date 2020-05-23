@@ -213,9 +213,15 @@ export class DbService {
               }  
               firebase.firestore().doc('users/' + userId)
               .update(
+                //Agregar partida al array
                 'gamesPlayed',
-                firebase.firestore.FieldValue.arrayUnion(gamePlayed)).then(_=>{
-                  resolve(true)
+                firebase.firestore.FieldValue.arrayUnion(gamePlayed),
+                //Sumar puntos
+                'puntos',
+                firebase.firestore.FieldValue.increment(score)).then(_=>{
+                  
+                    resolve(true)
+                  
                 })
             })
       })

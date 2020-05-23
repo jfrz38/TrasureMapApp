@@ -8,9 +8,9 @@
   <!-- JUGADO -->
   <ng-container *ngIf="type=='jugado'">
     <ion-card>
-      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+      <div>
       <!-- <ion-icon  style="font-size: 32px; color: black;" name="map-outline"></ion-icon> -->
-      <ion-card-title>{{game.title}}</ion-card-title>
+      <ion-card-title class="title-style">{{game.title}}</ion-card-title>
     </div>
       <img class="map" [src]="game.imageURL"/>
      
@@ -50,7 +50,7 @@
   <!-- JUGAR -->
   <ng-container *ngIf="type=='jugar'">
     <ion-card>
-      <ion-card-title>{{game.title}}</ion-card-title>
+      <ion-card-title class="title-style">{{game.title}}</ion-card-title>
       <img class="map " [src]="game.imageURL"/>
      
       <ion-card-content>

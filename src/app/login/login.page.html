@@ -3,19 +3,36 @@
     <ion-back-button></ion-back-button> 
   </ion-buttons>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="centered" style="margin-top:20px;">
+  <ion-card class="card-center">
   <form class="form" [formGroup]="formValidation" (ngSubmit)="tryLogin(formValidation.value)"> 
+    
+    <div style="display: flex; align-items: center; margin: 10px">
+      <img class="icon-img" src="../../assets/images/pirate-parrot-icon.png"/>
+      <ion-card-header class="title-style">Únete a la tripulación</ion-card-header>
+    </div>
+    
+    <!--
     <ion-item>
       <ion-label class="label-title">Introduzca sus datos para acceder a la aplicación:</ion-label>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating" color="primary">Email: </ion-label>
-      <ion-input type="text" formControlName="email"></ion-input>
+    -->
+    <ion-item style="--background: transparent">
+      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+        <div>
+          <ion-icon name="at-outline"></ion-icon>
+        </div>
+        <div>
+          <ion-label position="floating" color="black">Email: </ion-label>
+          <ion-input style="width:100%" type="text" formControlName="email"></ion-input>
+        </div>
+      </div>
+      
     </ion-item>
     <div> 
       <ng-container *ngFor="let validation of formValidationMessages.email">
@@ -24,9 +41,16 @@
         </div>
       </ng-container>
     </div>
-    <ion-item>
-      <ion-label position="floating" color="primary">Contraseña: </ion-label>
-      <ion-input type="password"  formControlName="password"></ion-input>
+    <ion-item style="--background: transparent">
+      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+        <div>
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </div>
+        <div>
+          <ion-label position="floating" color="black">Contraseña: </ion-label>
+          <ion-input  type="password"  formControlName="password"></ion-input>
+        </div>
+      </div>
     </ion-item>
     <div> 
       <ng-container *ngFor="let validation of formValidationMessages.password">
@@ -35,13 +59,18 @@
         </div>
       </ng-container>
     </div>
-    <div class="div-button-login"> 
-      <ion-button type="submit" [disabled]="!formValidation.valid">Iniciar sesión</ion-button>
-    </div>
+    <ion-button style="margin:10px" type="submit" [disabled]="!formValidation.valid">
+      <ion-icon name="log-in-outline"></ion-icon>
+      <ion-label style="margin:10px">Iniciar sesión</ion-label>
+    </ion-button>
     <div class="div-label-error"> 
      <ion-label class="error-message">{{ errorMessage }}</ion-label>
     </div>
   </form>
-
+</ion-card>
+<!--
+<img src="../../assets/images/pirate-boy.png"/>
+-->
+</div>
 </ion-content>
 

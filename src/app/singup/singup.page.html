@@ -1,11 +1,85 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>singup</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrarse</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content >
+<div class="centered">
+  
 
-<ion-content>
-  <ion-button (click)="singUpUser()">Registrarse</ion-button>
-  <ion-input type="text"></ion-input>
-  <ion-input type="text"></ion-input>
+<div style="margin-top: 4px;">
+  <img src="../../assets/images/sombrero-pirata2.png" class="img-sombrero"/>
+</div>
+
+<ion-card class="card-center">
+  <form class="form" [formGroup]="formValidation" (ngSubmit)="singUpUser(formValidation.value)">
+   <!-- <div style="display: flex; align-items: center; margin-bottom: 4px;">
+      <img src="../../assets/images/pirate-parrot-icon.png"/>
+    </div>-->
+    <ion-card-header class="title-style">Únete a la tripulación</ion-card-header>
+    
+    
+    <ion-item style="--background: transparent">
+      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+        <div>
+          <ion-icon name="at-outline"></ion-icon>
+        </div>
+        <div>
+          <ion-label position="floating" color="black">Email: </ion-label>
+          <ion-input style="width:100%" type="text" formControlName="email"></ion-input>
+        </div>
+      </div>
+      
+    </ion-item>
+    <ng-container *ngFor="let validation of formValidationMessages.email">
+      <div class="error-message" *ngIf="formValidation.get('email').hasError(validation.type) && (formValidation.get('email').dirty || formValidation.get('email').touched)">
+        {{ validation.message }}
+      </div>
+    </ng-container>
+    <ion-item style="--background: transparent">
+      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+        <div>
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </div>
+        <div>
+          <ion-label position="floating" color="black">Contraseña: </ion-label>
+          <ion-input  type="password"  formControlName="password"></ion-input>
+        </div>
+      </div>
+    </ion-item>
+    <ng-container *ngFor="let validation of formValidationMessages.password">
+      <div class="error-message" *ngIf="formValidation.get('password').hasError(validation.type) && (formValidation.get('password').dirty || formValidation.get('password').touched)">
+        {{ validation.message }}
+      </div>
+    </ng-container>
+
+    <ion-item style="--background: transparent">
+      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+        <div>
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+        <div>
+          <ion-label position="floating" color="black">Nombre: </ion-label>
+          <ion-input  type="text"  formControlName="name"></ion-input>
+        </div>
+      </div>
+    </ion-item>
+    <ng-container *ngFor="let validation of formValidationMessages.name">
+      <div class="error-message" *ngIf="formValidation.get('name').hasError(validation.type) && (formValidation.get('name').dirty || formValidation.get('name').touched)">
+        {{ validation.message }}
+      </div>
+    </ng-container>
+
+    <ion-button style="margin:10px" type="submit" [disabled]="!formValidation.valid">
+      <img class="icon-img" src="../../assets/images/craneo.png"/>
+      <ion-label style="margin:10px">¡Regístrate!</ion-label>
+    </ion-button>
+  </form>
+</ion-card>
+
+  <img src="../../assets/images/barco-pirata.png" class="img-barco"/>
+</div>
 </ion-content>
