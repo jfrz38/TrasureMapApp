@@ -3,10 +3,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as util from 'util'
-import { utils, element } from 'protractor';
-import { resolveCname } from 'dns';
-import { FirebaseApp } from '@angular/fire';
 
 @Injectable({
   providedIn: 'root'
@@ -20,22 +16,9 @@ export class DbService {
     public afAuth: AngularFireAuth
   ) { }
 
-  /*getUser() {
-    return new Promise<any>((resolve, reject) => {
-
-      this.afAuth.user.subscribe(currentUser => {
-        //this.snapshotChangesSubscription = this.afs.collection('users').doc(currentUser.uid).snapshotChanges();
-        this.afs.collection('users').doc(currentUser.uid).get().toPromise().then(doc => {
-          resolve(doc.data());
-
-        })
-      })
-    })
-  }*/
-
   getGamesCreated(id = null) {
     return new Promise<any>((resolve, reject) => {
-
+      
       this.getUserData(id).then(snapshot => {
         let games = []
         snapshot.gamesCreated.forEach(async doc => {
@@ -49,39 +32,10 @@ export class DbService {
           }))
         });
         resolve(Promise.all(games))
-      })
-
-      /*this.getUserData(id).then(snapshot => {
-        let games = []
-        snapshot.gamesCreated.forEach(doc => {
-          console.log("AA")
-          games.push(doc.reference.get().then(game => {
-            return new Promise<any>(res => {
-              res(game.data())
-            })
-          }))
-        });
-        resolve(Promise.all(games))
-      })*/
-    })
-
-
-
-
-
-    /*return new Promise<any>((resolve, reject) => {
-    this.afAuth.user.subscribe(currentUser => {
-      this.afs.collection('users').doc(id===null ? currentUser.uid : id).get().toPromise().then(doc=>{
-        let games = []
-        if(doc.data()!==undefined){
-          doc.data().gamesCreated.forEach(game => {
-            games.push(this.getGame(game))
-          });
-        }
-        resolve(Promise.all(games))
+      },err => {
+        reject(err);
       })
     })
-  })*/
   }
 
   getGamesPlayed(id = null) {
@@ -101,6 +55,8 @@ export class DbService {
           }))
         });
         resolve(Promise.all(games))
+      },err => {
+        reject(err);
       })
     })
   }
@@ -108,7 +64,10 @@ export class DbService {
   getGamesToPlay(id = null) {
     //Coger todos los juegos existentes MENOS los que estén en user.gamesPlayed
     return new Promise<any>(async (resolve, reject) => {
-      var gamesPlayed = await this.getGamesPlayed(id)
+      var gamesPlayed = await this.getGamesPlayed(id).catch(error=>{
+        return reject(error)
+      })
+      if(!gamesPlayed) return reject()
       var totalGames = (await firebase.firestore().collection('games').get()).docs.map(doc => {
         const id = doc.id;
         const data = doc.data();
@@ -126,50 +85,21 @@ export class DbService {
         });
         if(!exists) newArray.push(total)
       })
-      /*var newArray = totalGames.filter(function (item) {
-        var newList = []
-        if (gamesPlayed.length > 0) {
-          
-          for (var i = 0; i < gamesPlayed.length; i++) {
-            if (Object.entries(gamesPlayed[i].game).sort().toString() === Object.entries(item.data).sort().toString()) {
-              gamesPlayed.splice(i, 1);
-              i--;
-              return false;
-            } else {
-              newList.push(gamesPlayed[i].game)
-            }
-          }
-        } else {
-          return newList;
-        }
-      })*/
       resolve(newArray)
     })
-
-    /*return new Promise<any>(async (resolve, reject) => {
-      //Juegos terminados por el usuario
-      var userGamesPlayed = await this.getUserData(id)
-      userGamesPlayed = userGamesPlayed.gamesPlayed
-      //console.log("gp = " + JSON.stringify(userGamesPlayed))
-      //Juegos totales en la BD
-      const db = await firebase.firestore().collection('games').get()
-      var results = []
-      //Filtrar los juegos que no hayan sido jugados
-      db.docs.map(doc => {
-        if (!userGamesPlayed.includes(doc.id)) {
-          results.push(doc.data())
-        }
-      })
-      resolve(results)
-    })*/
   }
 
   getUserData(id = null) {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.user.subscribe(currentUser => {
-        this.afs.collection('users').doc(id === null ? currentUser.uid : id).get().toPromise().then(doc => {
-          resolve(doc.data())
-        })
+        //if(currentUser === null && id === null) return reject()
+        try{
+          this.afs.collection('users').doc(id === null ? currentUser.uid : id).get().toPromise().then(doc => {
+            resolve(doc.data())
+          })
+        }catch(error){
+          reject(error);
+        }
       })
     })
   }
@@ -178,6 +108,8 @@ export class DbService {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('games').doc(id).get().toPromise().then(doc => {
         resolve(doc.data())
+      },err => {
+        reject(err);
       })
     })
   }
@@ -196,6 +128,8 @@ export class DbService {
           })
         })
         
+      },err => {
+        reject(err);
       })
     })
   }
@@ -224,6 +158,8 @@ export class DbService {
                   
                 })
             })
+      },err => {
+        reject(err);
       })
     })
   }
@@ -232,6 +168,8 @@ export class DbService {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('games/').doc(id).update(newGame).then(_=>{
           resolve(true)
+        },err => {
+          reject(err);
         })
     })
   }
@@ -241,7 +179,6 @@ export class DbService {
   }
 
   createUser(insertUser, email, pass) {
-
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, pass).then(function (user) {
         firebase.firestore().collection('users/').doc(user.user.uid).set(insertUser)
@@ -271,6 +208,8 @@ export class DbService {
                 })
           })
         })
+      },err => {
+        reject(err);
       })
 
     })
@@ -284,6 +223,8 @@ export class DbService {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.user.subscribe(currentUser => {
         resolve(currentUser.uid)
+      },err => {
+        reject(err);
       })
     })
   }
@@ -301,7 +242,7 @@ export class DbService {
           reject(err);
         })
       })
-    })
+    });
   }
 
   encodeImageUri(imageUri, callback) {

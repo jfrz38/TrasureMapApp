@@ -18,6 +18,8 @@ export class JuegosDisponiblesPage implements OnInit {
     //Cargar partidas disponibles
     this.dbservice.getGamesToPlay().then(res=>{
       this.gamesToPlay=res;
+    }).catch(_=>{
+      this.gamesToPlay = []
     })
     this.isMobile = this.checkService.checkDevice();
   }

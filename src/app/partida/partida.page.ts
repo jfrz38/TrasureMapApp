@@ -3,7 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DbService } from '../services/db.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import * as util from 'util'
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { AlertController } from '@ionic/angular';
 import { CalculatePointsService } from '../services/calculate-points.service';
@@ -15,17 +15,36 @@ import { CalculatePointsService } from '../services/calculate-points.service';
 })
 export class PartidaPage implements OnInit {
 
+  formValidation: FormGroup;
+  errorMessage: string = '';
+
+  formValidationMessages = {
+    //PositionX
+    'positionX': [
+      { type: 'required', message: 'El campo es obligatorio.' },
+      { type: 'min', message: 'La posición debe ser mayor de 0' }
+    ],
+    //PositionY
+    'positionY': [
+      { type: 'required', message: 'El campo es obligatorio.' },
+      { type: 'min', message: 'La posición debe ser mayor de 0' }
+    ],
+  };
+
   constructor(private dbservice: DbService,
     public router: Router,
     private sanitizer: DomSanitizer,
     private activateRoute: ActivatedRoute,
     private location: Location,
     public alertController: AlertController,
+    private formBuilder: FormBuilder,
     private calculatePoints: CalculatePointsService) { }
 
   type: String;
   image: SafeResourceUrl;
   id: String;
+
+
 
   game = { 
     bound: [],
@@ -41,16 +60,31 @@ export class PartidaPage implements OnInit {
     this.type = this.activateRoute.snapshot.paramMap.get("type")
     this.id = this.activateRoute.snapshot.paramMap.get("id")
     if (this.type == 'jugar') {
+      this.resetValues()
       this.getGameFromDB()
-    }else {
+    }else if(this.type=='jugado') {
       //jugado
       this.game = JSON.parse(
         JSON.stringify(
           this.router.getCurrentNavigation().extractedUrl.queryParams))
+    }else{
+      //error
     }
 
   }
 
+  resetValues(){
+    this.formValidation = this.formBuilder.group({
+      positionX: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.min(1),
+      ])),
+      positionY: new FormControl('', Validators.compose([
+        Validators.min(1),
+        Validators.required
+      ])),
+    });
+  }
   getGameFromDB() {
     this.dbservice.getGame(this.id).then(res => {
       this.game = res;
@@ -61,9 +95,10 @@ export class PartidaPage implements OnInit {
     this.location.back();
   }
 
-  sendGame(inputx, inputy){
+  sendGame(value){
     var points=this.game.points;
-    var response=[inputx,inputy]
+    var response=[value.inputx,value.inputy]
+
     //Calcular puntuación
     this.calculatePoints.calculatePoints(this.game.solution, 
       response, this.game.points).then( result =>{

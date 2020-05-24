@@ -20,6 +20,8 @@ export class EstadisticasPage implements OnInit {
   ngOnInit() {
     this.dbservice.getUserData().then(res=>{
       this.valores=res;
+    }).catch(_=>{
+      
     })
   }
 

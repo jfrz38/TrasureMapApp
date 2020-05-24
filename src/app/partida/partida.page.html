@@ -49,32 +49,51 @@
 
   <!-- JUGAR -->
   <ng-container *ngIf="type=='jugar'">
+    <form class="form" [formGroup]="formValidation" (ngSubmit)="sendGame(formValidation.value)"> 
+    
     <ion-card>
       <ion-card-title class="title-style">{{game.title}}</ion-card-title>
       <img class="map " [src]="game.imageURL"/>
-     
+      
       <ion-card-content>
         <ion-icon style="font-size: 32px; color: black;" name="document-text-outline"></ion-icon>
         {{game.description}}        
       </ion-card-content>
+     
       <ion-item>
         <ion-icon name="map-outline"></ion-icon>
         <ion-label style="margin-left: 5px;">Respuesta: </ion-label>
         <ion-label>X:</ion-label>
-        <ion-input #input_x type="number"></ion-input>
+        <ion-input formControlName="positionX" type="number"></ion-input>
         <ion-label>Y:</ion-label>
-        <ion-input #input_y type="number"></ion-input>
+        <ion-input formControlName="positionY" type="number"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of formValidationMessages.positionX">
+          <div class="error-message"
+            *ngIf="(formValidation.get('positionX').hasError(validation.type) && (formValidation.get('positionX').dirty || formValidation.get('positionX').touched))">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <ng-container *ngFor="let validation of formValidationMessages.positionY">
+          <div class="error-message"
+            *ngIf="(formValidation.get('positionY').hasError(validation.type) && (formValidation.get('positionY').dirty || formValidation.get('positionY').touched)) ">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
       <ion-item>
         <ion-icon name="trophy-outline"></ion-icon>
         <ion-label style="margin-left: 5px;">Puntos disponibles: {{game.points}} </ion-label>
       </ion-item>
+    
     </ion-card>
     <ion-button
               style="float: right; margin-bottom: 10px;"
-              (click)="sendGame(input_x.value, input_y.value)"
+              type="submit" [disabled]="!formValidation.valid"
               >Comprobar respuesta</ion-button
             >
+          </form>    
   </ng-container>
   
 </ion-content>

@@ -18,6 +18,8 @@ export class JuegosCompletadosPage implements OnInit {
     //Cargar partidas jugadas
     this.dbservice.getGamesPlayed().then(res=>{
       this.gamesPlayed=res;
+    }).catch(_=>{
+      this.gamesPlayed=[]
     })
     this.isMobile = this.checkService.checkDevice();
   }
