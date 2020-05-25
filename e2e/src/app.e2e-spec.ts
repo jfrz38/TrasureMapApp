@@ -1,19 +1,11 @@
 import { AppPage } from './app.po';
 import { browser, element, by } from "protractor";
 
-/*describe('new App', () => {
-  let page: AppPage;
-
-  beforeEach(() => {
-    page = new AppPage();
-  });
-
-});*/
-
 describe('navigation from home', ()=>{
   let page: AppPage;
 
   beforeEach(() => {
+    browser.restart()
     browser.get("/");
     page = new AppPage();
   });
@@ -22,7 +14,9 @@ describe('navigation from home', ()=>{
   //opciones y solo es posible login/registro
   it('can not go into manage for non user',async ()=>{
     let firstPath = await browser.getCurrentUrl()
-    element(by.xpath("//div[@id='top']")).click()
+    //element(by.xpath("//div[@id='top']")).click()
+    element(by.id('top')).click()
+    browser.waitForAngular();
     let currentPath = await browser.getCurrentUrl()
     //Después de hacer click se mantiene en la misma página
     expect(currentPath).toEqual(firstPath)
@@ -30,7 +24,9 @@ describe('navigation from home', ()=>{
 
   it('can not go into play for non user',async ()=>{
     let firstPath = await browser.getCurrentUrl()
-    element(by.xpath("//div[@id='bottom']")).click()
+    //element(by.xpath("//div[@id='bottom']")).click()
+    element(by.id('bottom')).click()
+    browser.waitForAngular();
     let currentPath = await browser.getCurrentUrl()
     //Después de hacer click se mantiene en la misma página
     expect(currentPath).toEqual(firstPath)
@@ -38,57 +34,140 @@ describe('navigation from home', ()=>{
 
   //Se permite:
   it('can go to login', async ()=>{
-    element(by.xpath("//ion-label[(text()= 'Identificarse')]")).click()
-    expect(page.getPageTitle()).toEqual('Iniciar sesión')
+    element(by.xpath("//ion-label[(text()= 'Identificarse')]")).click().then(_=>{
+      page.getPageTitle().then(title=>{
+        expect(title).toEqual('Iniciar sesión')
+      })
+    })
+    //browser.waitForAngular();
+    //browser.sleep(500)
+    //expect(await page.getPageTitle()).toEqual('Iniciar sesión')
+    
   })
 
   it('can go to register',()=>{
-    element(by.xpath("//ion-label[(text()= 'Registrarse')]")).click()
-    expect(page.getPageTitle()).toEqual('Registrarse')
+    element(by.xpath("//ion-label[(text()= 'Registrarse')]")).click().then(_=>{
+      page.getPageTitle().then(title=>{
+        expect(title).toEqual('Registrarse')
+      })
+    })
+    //browser.waitForAngular();
+    //browser.sleep(500)
+    //expect(await page.getPageTitle()).toEqual('Registrarse')
+    
   })
 
-  it('can go to play and manage',()=>{
+  it('can go to play and manage',async ()=>{
     //email: prueba@prueba.prueba
     //pass: prueba
     //nombre: prueba
 
-    //Iniciar sesión
-    browser.get("/login");
-    //var mail = element(by.tagName('ion-input')[0])//element(by.xpath("//ion-input[(text()='Email:')]"))
-    //var pass = element(by.tagName('ion-input')[1])//element(by.xpath("//ion-input[(text()='Contraseña:')]"))
-    //mail.sendKeys('prueba@prueba.prueba')
-    //pass.sendKeys('prueba')
+    //await page.login()
+/*
+    await browser.get('/login')//this.navigateTo('/login')
     element(by.css("ion-input[formControlName=email] input")).sendKeys('prueba@prueba.prueba');
     element(by.css("ion-input[formControlName=password] input")).sendKeys('prueba');
     //Solo hay un botón
     element(by.css('ion-button')).click();
+    browser.ignoreSynchronization = true
+    browser.waitForAngular();
+    expect(element(by.id('top')).isPresent()).toBeTruthy();
+*/
+browser.ignoreSynchronization = true
+    browser.get('login').then(_=>{
+      
+      element(by.css("ion-input[formControlName=email] input")).sendKeys('prueba@prueba.prueba');
+      element(by.css("ion-input[formControlName=password] input")).sendKeys('prueba');
+      //Solo hay un botón
+      element(by.css('ion-button')).click().then(_=>{
+        browser.sleep(1000)
+        expect(element(by.id('top')).isPresent()).toBeTruthy();
+      })
+    })
+    /*
+    await page.login()
+    //expect(true).toBeTruthy()
     //1. Acceder a la gestión de juegos
-    element(by.xpath("//div[@id='top']")).click()
-    expect(page.getPageTitle()).toEqual('Gestión')
+    //browser.driver.sleep(10000); 
+    //await element(by.xpath("//div[@id='top']")).click()
+    //var a = await browser.getPageSource()
+    //console.log("aaaaaa = \n"+a)
+    await element(by.xpath("//h1[(text()= 'Gestión')]")).click()
+    //await element(by.id('top')).click()
+    expect(await page.getPageTitle()).toEqual('Gestión')
+    expect(true).toBeTruthy()*/
+    /*
     //2. Participar en juegos
     browser.navigate().back();
     element(by.xpath("//div[@id='bottom']")).click()
-    expect(page.getPageTitle()).toEqual('Juegos disponibles')
+    expect(page.getPageTitle()).toEqual('Juegos disponibles')*/
   })
 })
 
 describe('navigation from manage',()=>{
-  it('can go home',()=>{
-    expect(true).toBeTruthy();
+  let page: AppPage;
+
+  beforeEach(() => {
+    browser.get("/gestion");
+    browser.ignoreSynchronization = true
+    page = new AppPage();
+  });
+
+  it('can go home',async ()=>{
+    let backButton = await element(by.css('ion-icon[name=arrow-back]'))
+    browser.executeScript("arguments[0].click();", backButton.getWebElement());
+    expect(element(by.id('top')).isPresent()).toBeTruthy();
   })
+
   it('can create game',()=>{
-    expect(true).toBeTruthy();
+    element(by.xpath("//ion-label[(text()= 'CREAR JUEGO')]")).click()
+    expect(element(by.xpath("//ion-card-header")).getText()).toEqual('Crear juego')
   })
 })
 
 describe('navigation from play',()=>{
-  it('can go to available games',()=>{
-    expect(true).toBeTruthy();
+  let page: AppPage;
+
+  beforeEach(() => {
+    browser.get("/participar/juegosDisponibles");
+    page = new AppPage();
+  });
+
+  it('can go home',async ()=>{
+    element(by.xpath("//ion-label[(text()= 'Inicio')]")).click()
+    browser.waitForAngular();
+    expect(element(by.id('top')).isPresent()).toBeTruthy();
   })
-  it('can go to palyed games',()=>{
-    expect(true).toBeTruthy();
+
+  it('can go to available games',async ()=>{
+    browser.get("/participar/juegosCompletados").then(_=>{
+      element(by.id('tab-button-juegosDisponibles')).click().then(_=>{
+        element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
+          console.log("title = "+title)
+          expect(title).toEqual('Juegos disponibles')
+        })
+      })
+    })
   })
-  it('can go to stadistics',()=>{
-    expect(true).toBeTruthy();
+
+  it('can go to played games',async()=>{
+    element(by.id('tab-button-juegosCompletados')).click().then(_=>{
+      let a = element(by.css('ion-title'));
+      console.log("AAAAAA = ",a)
+      console.log("BBBBBB = "+JSON.stringify(a))
+      element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
+        console.log("title = "+title)
+        expect(title).toEqual('Juegos completados')
+      })
+    })
+  })
+
+  it('can go to stadistics',async()=>{
+    element(by.id('tab-button-estadisticas')).click().then(_=>{
+      element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
+        console.log("title = "+title)
+        expect(title).toEqual('Estadísticas')
+      })
+    })
   })
 })

@@ -44,3 +44,9 @@ ion-item{
   line-height: 30px;
   text-align: center;
 }
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: smaller;
+  padding: 10px;
+}

@@ -22,6 +22,26 @@ export class AuthService {
    })
   }
 
+  /*
+
+   doLogin(value){ 
+   return new Promise<any>((resolve, reject) => {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(function() {
+      return firebase.auth().signInWithEmailAndPassword(value.email, value.password)
+     .then(
+       res => resolve(res),
+       err => reject(err))
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+      });
+   })
+  }
+
+  */
+
   doLogout(){ 
     return new Promise((resolve, reject) => {
       this.afAuth.auth.signOut()

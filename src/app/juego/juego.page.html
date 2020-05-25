@@ -13,7 +13,7 @@
         <ion-label>Volver atrás</ion-label>
       </ion-button>
     </div>
-
+    
     <div class="right" style="float: right; margin-right: 10px;">
       <ion-buttons *ngIf="type=='create'">
         <ion-icon
@@ -39,6 +39,10 @@
       (ngSubmit)="onSubmit(formValidation.value)"
     >
       <ion-card>
+        
+        <ion-card-header *ngIf="type=='create'" class="headerStyle">Crear juego</ion-card-header>
+        <ion-card-header *ngIf="type=='propio'" class="headerStyle">Editar juego</ion-card-header>
+
         <img
           *ngIf="photoEnabled"
           (click)="takePhoto()"
