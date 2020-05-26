@@ -34,15 +34,5 @@ describe('HomePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('can login',()=>{
-    //existe botón de login
-    expect(component).toBeTruthy();
-  })
-
-  it('can register',()=>{
-    //existe botón de registrarse
-    expect(component).toBeTruthy();
-  })
   
 });

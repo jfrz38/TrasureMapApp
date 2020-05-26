@@ -22,8 +22,7 @@ export class GestionPage implements OnInit {
   ngOnInit() {
     this.dbservice.getGamesCreated().then(res=>{
       this.gamesCreated=res;
-    }).catch(error=>{
-      console.log("gestion error")
+    }).catch(_=>{
       this.gamesCreated=[]
     })
     this.isMobile = this.checkService.checkDevice();

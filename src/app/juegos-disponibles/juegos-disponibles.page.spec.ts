@@ -11,6 +11,8 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
+import { By } from '@angular/platform-browser';
+
 describe('JuegosDisponiblesPage', () => {
   let component: JuegosDisponiblesPage;
   let fixture: ComponentFixture<JuegosDisponiblesPage>;
@@ -37,4 +39,37 @@ describe('JuegosDisponiblesPage', () => {
   it('should exists clients variable',()=>{
     expect(component.gamesToPlay).not.toBeUndefined()
   })
+
+  it('empty list image',()=>{
+    component.gamesToPlay=[]
+    fixture.detectChanges()
+    expect(fixture.debugElement.query(By.css('.imgPirata'))).not.toBeNull()
+  })
+
+  it('list show games',()=>{
+    var game = {
+      id: '',
+      data:{
+        description: '',
+        points: 0,
+        imageURL: '',
+        solution: [0, 0],
+        title: '',
+        bound: [0, 0]
+      }
+    }
+    component.gamesToPlay = []
+    fixture.detectChanges()
+    expect(fixture.debugElement.queryAll(By.css('ion-item')).length).toBe(0)
+    component.gamesToPlay.push(game)
+    fixture.detectChanges()
+    expect(fixture.debugElement.queryAll(By.css('ion-item')).length).toBe(1)
+    component.gamesToPlay.push(game)
+    fixture.detectChanges()
+    expect(fixture.debugElement.queryAll(By.css('ion-item')).length).toBe(2)
+    component.gamesToPlay.push(game)
+    fixture.detectChanges()
+    expect(fixture.debugElement.queryAll(By.css('ion-item')).length).toBe(3)
+  })
+
 });

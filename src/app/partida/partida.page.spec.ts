@@ -40,35 +40,52 @@ describe('PartidaPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+});
 
-  it('check form values: negative numbers',()=>{
-    expect(true).toBeTruthy();
-    //acceder a la ruta de un ID existente (de prueba)
-    //y comprobar que sale un mensaje de error al meter
-    //valores negativos
-    //expect msgError = "..."
+describe('Form JuegoPage', () => {
+  let component: PartidaPage;
+  let fixture: ComponentFixture<PartidaPage>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ PartidaPage ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [FormsModule,
+        IonicModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        AngularFireModule.initializeApp(environment.firebase), 
+        AngularFirestoreModule, 
+        AngularFireAuthModule, 
+        AngularFireStorageModule, IonicModule.forRoot()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PartidaPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    component.resetValues()
+  }));
+
+  //comprobar funcionamiento del formulario
+  it('check solution X',()=>{
+    component.formValidation.controls.positionX.markAsTouched();
+    expect(component.formValidation.controls.positionX.valid).toBeFalsy();
+    component.formValidation.controls.positionX.setValue(-1);
+    expect(component.formValidation.controls.positionX.valid).toBeFalsy();
+    component.formValidation.controls.positionX.setValue(0);
+    expect(component.formValidation.controls.positionX.valid).toBeFalsy();
+    component.formValidation.controls.positionX.setValue(4);
+    expect(component.formValidation.controls.positionX.valid).toBeTruthy();
   })
 
-  it('check form values: letters',()=>{
-    expect(true).toBeTruthy();
-    //acceder a la ruta de un ID existente (de prueba)
-    //y comprobar que sale un mensaje de error al meter
-    //valores con letras
-    //expect button = disabled
-  })
-
-  it('check form values: ok',()=>{
-    expect(true).toBeTruthy();
-    //acceder a la ruta de un ID existente (de prueba)
-    //y comprobar que NO sale un mensaje de error al meter
-    //valores correctos
-    //expect button = enabled
-  })
-
-  it('check played game',()=>{
-    expect(true).toBeTruthy();
-    //acceder a la ruta de un ID existente (de prueba)
-    //y comprobar que se tienen los labels de los atributos
-    //que se piden
+  it('check solution Y',()=>{
+    component.formValidation.controls.positionX.markAsTouched();
+    expect(component.formValidation.controls.positionX.valid).toBeFalsy();
+    component.formValidation.controls.positionX.setValue(-1);
+    expect(component.formValidation.controls.positionX.valid).toBeFalsy();
+    component.formValidation.controls.positionX.setValue(0);
+    expect(component.formValidation.controls.positionX.valid).toBeFalsy();
+    component.formValidation.controls.positionX.setValue(4);
+    expect(component.formValidation.controls.positionX.valid).toBeTruthy();
   })
 });

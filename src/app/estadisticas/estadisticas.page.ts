@@ -21,7 +21,7 @@ export class EstadisticasPage implements OnInit {
     this.dbservice.getUserData().then(res=>{
       this.valores=res;
     }).catch(_=>{
-      
+      //
     })
   }
 

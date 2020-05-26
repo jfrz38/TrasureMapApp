@@ -3,10 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { CheckPlatformService } from './check-platform.service';
 
 describe('CheckPlatformService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: CheckPlatformService
+  beforeEach(() => { 
+    service = TestBed.get(CheckPlatformService);
+  });
 
   it('should be created', () => {
-    const service: CheckPlatformService = TestBed.get(CheckPlatformService);
     expect(service).toBeTruthy();
   });
+
+  it('should not be mobile',()=>{
+    expect(service.checkDevice()).toBeFalsy()
+  })
 });

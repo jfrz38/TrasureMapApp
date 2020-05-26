@@ -37,4 +37,58 @@ describe('LoginPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+});
+
+describe('Form LoginPage', () => {
+  let component: LoginPage;
+  let fixture: ComponentFixture<LoginPage>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ LoginPage ],
+      imports: [
+        FormsModule,
+        IonicModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        AngularFireModule.initializeApp(environment.firebase), 
+        AngularFirestoreModule, 
+        AngularFireAuthModule, 
+        AngularFireStorageModule,
+        IonicModule.forRoot()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(LoginPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    component.ngOnInit()
+    //component.resetFields('create')
+  }));
+
+  it('check email', () => {
+    component.formValidation.controls.email.markAsTouched();
+    expect(component.formValidation.controls.email.valid).toBeFalsy();
+    component.formValidation.controls.email.setValue('');
+    expect(component.formValidation.controls.email.valid).toBeFalsy();
+    component.formValidation.controls.email.setValue('asd');
+    expect(component.formValidation.controls.email.valid).toBeFalsy();
+    component.formValidation.controls.email.setValue('correo.com');
+    expect(component.formValidation.controls.email.valid).toBeFalsy();
+    component.formValidation.controls.email.setValue('correo@correo.com');
+    expect(component.formValidation.controls.email.valid).toBeTruthy();
+
+  });
+
+  it('check password', () => {
+    component.formValidation.controls.password.markAsTouched();
+    expect(component.formValidation.controls.password.valid).toBeFalsy();
+    component.formValidation.controls.password.setValue('');
+    expect(component.formValidation.controls.password.valid).toBeFalsy();
+    component.formValidation.controls.password.setValue('asd');
+    expect(component.formValidation.controls.password.valid).toBeFalsy();
+    component.formValidation.controls.password.setValue('password');
+    expect(component.formValidation.controls.password.valid).toBeTruthy();
+  });
+
 });

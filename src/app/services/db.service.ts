@@ -215,10 +215,6 @@ export class DbService {
     })
   }
 
-  addGamePlayed(){
-    
-  }
-
   getCurrentUserID() {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.user.subscribe(currentUser => {

@@ -14,7 +14,6 @@ describe('navigation from home', ()=>{
   //opciones y solo es posible login/registro
   it('can not go into manage for non user',async ()=>{
     let firstPath = await browser.getCurrentUrl()
-    //element(by.xpath("//div[@id='top']")).click()
     element(by.id('top')).click()
     browser.waitForAngular();
     let currentPath = await browser.getCurrentUrl()
@@ -24,7 +23,6 @@ describe('navigation from home', ()=>{
 
   it('can not go into play for non user',async ()=>{
     let firstPath = await browser.getCurrentUrl()
-    //element(by.xpath("//div[@id='bottom']")).click()
     element(by.id('bottom')).click()
     browser.waitForAngular();
     let currentPath = await browser.getCurrentUrl()
@@ -39,10 +37,6 @@ describe('navigation from home', ()=>{
         expect(title).toEqual('Iniciar sesión')
       })
     })
-    //browser.waitForAngular();
-    //browser.sleep(500)
-    //expect(await page.getPageTitle()).toEqual('Iniciar sesión')
-    
   })
 
   it('can go to register',()=>{
@@ -51,56 +45,21 @@ describe('navigation from home', ()=>{
         expect(title).toEqual('Registrarse')
       })
     })
-    //browser.waitForAngular();
-    //browser.sleep(500)
-    //expect(await page.getPageTitle()).toEqual('Registrarse')
-    
   })
 
   it('can go to play and manage',async ()=>{
     //email: prueba@prueba.prueba
     //pass: prueba
     //nombre: prueba
-
-    //await page.login()
-/*
-    await browser.get('/login')//this.navigateTo('/login')
-    element(by.css("ion-input[formControlName=email] input")).sendKeys('prueba@prueba.prueba');
-    element(by.css("ion-input[formControlName=password] input")).sendKeys('prueba');
-    //Solo hay un botón
-    element(by.css('ion-button')).click();
     browser.ignoreSynchronization = true
-    browser.waitForAngular();
-    expect(element(by.id('top')).isPresent()).toBeTruthy();
-*/
-browser.ignoreSynchronization = true
     browser.get('login').then(_=>{
-      
       element(by.css("ion-input[formControlName=email] input")).sendKeys('prueba@prueba.prueba');
       element(by.css("ion-input[formControlName=password] input")).sendKeys('prueba');
       //Solo hay un botón
       element(by.css('ion-button')).click().then(_=>{
-        browser.sleep(1000)
-        expect(element(by.id('top')).isPresent()).toBeTruthy();
+        expect(element(by.id('top'))).toBeTruthy()
       })
     })
-    /*
-    await page.login()
-    //expect(true).toBeTruthy()
-    //1. Acceder a la gestión de juegos
-    //browser.driver.sleep(10000); 
-    //await element(by.xpath("//div[@id='top']")).click()
-    //var a = await browser.getPageSource()
-    //console.log("aaaaaa = \n"+a)
-    await element(by.xpath("//h1[(text()= 'Gestión')]")).click()
-    //await element(by.id('top')).click()
-    expect(await page.getPageTitle()).toEqual('Gestión')
-    expect(true).toBeTruthy()*/
-    /*
-    //2. Participar en juegos
-    browser.navigate().back();
-    element(by.xpath("//div[@id='bottom']")).click()
-    expect(page.getPageTitle()).toEqual('Juegos disponibles')*/
   })
 })
 
@@ -120,52 +79,47 @@ describe('navigation from manage',()=>{
   })
 
   it('can create game',()=>{
-    element(by.xpath("//ion-label[(text()= 'CREAR JUEGO')]")).click()
-    expect(element(by.xpath("//ion-card-header")).getText()).toEqual('Crear juego')
+    element(by.xpath("//ion-label[(text()= 'CREAR JUEGO')]")).click().then(_=>{
+      expect(element(by.xpath("//ion-card-header")).getText()).toEqual('Crear juego')
+    })
+    
   })
 })
 
 describe('navigation from play',()=>{
   let page: AppPage;
-
   beforeEach(() => {
-    browser.get("/participar/juegosDisponibles");
     page = new AppPage();
   });
 
-  it('can go home',async ()=>{
+  it('can go home',()=>{
+    browser.get("/participar/juegosDisponibles");
     element(by.xpath("//ion-label[(text()= 'Inicio')]")).click()
     browser.waitForAngular();
     expect(element(by.id('top')).isPresent()).toBeTruthy();
   })
 
-  it('can go to available games',async ()=>{
-    browser.get("/participar/juegosCompletados").then(_=>{
-      element(by.id('tab-button-juegosDisponibles')).click().then(_=>{
+  it('can go to available games',()=>{
+    browser.get("/participar/juegosDisponibles").then(_=>{
         element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
-          console.log("title = "+title)
           expect(title).toEqual('Juegos disponibles')
         })
       })
-    })
   })
 
   it('can go to played games',async()=>{
     element(by.id('tab-button-juegosCompletados')).click().then(_=>{
-      let a = element(by.css('ion-title'));
-      console.log("AAAAAA = ",a)
-      console.log("BBBBBB = "+JSON.stringify(a))
-      element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
-        console.log("title = "+title)
-        expect(title).toEqual('Juegos completados')
-      })
+      browser.get("/participar/juegosCompletados").then(_=>{
+          element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
+            expect(title).toEqual('Juegos completados')
+          })
+        })
     })
   })
 
   it('can go to stadistics',async()=>{
-    element(by.id('tab-button-estadisticas')).click().then(_=>{
+    browser.get("/participar/estadisticas").then(_=>{
       element(by.css('ion-title')).getAttribute("innerHTML").then(title=>{
-        console.log("title = "+title)
         expect(title).toEqual('Estadísticas')
       })
     })
