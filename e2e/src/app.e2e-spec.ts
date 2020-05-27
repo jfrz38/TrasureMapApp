@@ -94,7 +94,10 @@ describe('navigation from play',()=>{
 
   it('can go home',()=>{
     browser.get("/participar/juegosDisponibles");
-    element(by.xpath("//ion-label[(text()= 'Inicio')]")).click()
+    //element(by.xpath("//ion-label[(text()= 'Inicio')]")).click()
+    //element(by.css('ion-icon[name=home]')).click()
+    //ion-buttons slot="end"
+    element(by.css('ion-buttons[slot=end]')).click()
     browser.waitForAngular();
     expect(element(by.id('top')).isPresent()).toBeTruthy();
   })

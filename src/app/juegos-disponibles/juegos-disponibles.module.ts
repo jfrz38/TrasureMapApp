@@ -8,6 +8,8 @@ import { JuegosDisponiblesPageRoutingModule } from './juegos-disponibles-routing
 
 import { JuegosDisponiblesPage } from './juegos-disponibles.page';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { JuegosDisponiblesPage } from './juegos-disponibles.page';
     IonicModule,
     JuegosDisponiblesPageRoutingModule
   ],
-  declarations: [JuegosDisponiblesPage]
+  declarations: [JuegosDisponiblesPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class JuegosDisponiblesPageModule {}

@@ -9,12 +9,12 @@
     <ion-buttons slot="end">    
       <ion-button [routerLink]="['/']" style="margin: 20px;">
         <ion-icon name="home"></ion-icon>
-        <ion-label style="margin:4px">Inicio</ion-label>
+        <!-- <ion-label style="margin:4px">Inicio</ion-label> -->
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
+<loading-bar *ngIf="showLoadIcon"></loading-bar>
 <ion-content *ngIf="gamesPlayed">
   <div style="max-width: 75%;" *ngIf="gamesPlayed.length==0; else mostrarResultados">
 

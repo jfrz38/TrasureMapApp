@@ -14,9 +14,12 @@ export class JuegosDisponiblesPage implements OnInit {
   gamesToPlay: Array<any>;
   isMobile: boolean = false;
 
+  showLoadIcon = true;
+
   ngOnInit() {
     //Cargar partidas disponibles
     this.dbservice.getGamesToPlay().then(res=>{
+      this.showLoadIcon = false;
       this.gamesToPlay=res;
     }).catch(_=>{
       this.gamesToPlay = []

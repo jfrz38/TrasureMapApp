@@ -14,9 +14,12 @@ export class JuegosCompletadosPage implements OnInit {
   gamesPlayed: Array<any>;
   isMobile: boolean = false;
 
+  showLoadIcon = true;
+
   ngOnInit() {
     //Cargar partidas jugadas
     this.dbservice.getGamesPlayed().then(res=>{
+      this.showLoadIcon = false;
       this.gamesPlayed=res;
     }).catch(_=>{
       this.gamesPlayed=[]

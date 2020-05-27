@@ -18,6 +18,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 //import { Camera } from '@ionic-native/camera/ngx';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -38,6 +41,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //Camera
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

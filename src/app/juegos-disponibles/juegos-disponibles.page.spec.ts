@@ -7,9 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AngularFireModule } from '@angular/fire'; //
 import { environment } from '../../environments/environment'; //
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { By } from '@angular/platform-browser';
 
@@ -24,7 +25,8 @@ describe('JuegosDisponiblesPage', () => {
         AngularFireModule.initializeApp(environment.firebase), 
         AngularFirestoreModule, 
         AngularFireAuthModule, 
-        AngularFireStorageModule, IonicModule.forRoot()]
+        AngularFireStorageModule, IonicModule.forRoot()],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(JuegosDisponiblesPage);

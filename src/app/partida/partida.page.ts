@@ -97,7 +97,7 @@ export class PartidaPage implements OnInit {
 
   sendGame(value){
     var points=this.game.points;
-    var response=[value.inputx,value.inputy]
+    var response=[value.positionX,value.positionY]
 
     //Calcular puntuación
     this.calculatePoints.calculatePoints(this.game.solution, 

@@ -8,6 +8,8 @@ import { GestionPageRoutingModule } from './gestion-routing.module';
 
 import { GestionPage } from './gestion.page';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { GestionPage } from './gestion.page';
     IonicModule,
     GestionPageRoutingModule
   ],
-  declarations: [GestionPage]
+  declarations: [GestionPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GestionPageModule {}

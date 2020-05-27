@@ -18,9 +18,12 @@ export class GestionPage implements OnInit {
 
     gamesCreated: Array<any>;
     isMobile: boolean = false;
+
+    showLoadIcon = true;
     
   ngOnInit() {
     this.dbservice.getGamesCreated().then(res=>{
+      this.showLoadIcon = false;
       this.gamesCreated=res;
     }).catch(_=>{
       this.gamesCreated=[]

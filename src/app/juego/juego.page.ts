@@ -238,9 +238,15 @@ export class JuegoPage implements OnInit {
     }
     if (this.type == 'propio') {
       this.editAlertController(gameToInsert)
-      return;
+      //return;
+    }else{
+      this.createAlertController(gameToInsert)
     }
-    this.dbservice.createGame(gameToInsert).then(res => {
+    
+  }
+
+  createGame(gameToInsert) {
+    this.dbservice.createGame(gameToInsert).then(_ => {
       this.router.navigate(["/gestion"]).then(() => {
         window.location.reload();
       });
@@ -285,6 +291,32 @@ export class JuegoPage implements OnInit {
   insertedURL() {
     if (this.imageURL == '') return;
     this.image = this.imageURL;
+  }
+
+  async createAlertController(gameToCreate){
+
+    const alert = await this.alertController.create({
+      header: '¡Cuidado!',
+      message: 'Se va a crear el juego introducido',
+      buttons:
+        [
+
+          {
+            text: 'Cancelar',
+            handler: () => {
+              return;
+            }
+          },
+          {
+            text: 'OK',
+            handler: () => {
+              this.createGame(gameToCreate)
+            }
+          }
+        ]
+    });
+
+    await alert.present();
   }
 
   async editAlertController(gameToEdit) {
