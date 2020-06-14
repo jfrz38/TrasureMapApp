@@ -25,6 +25,7 @@ describe('EstadisticasPage', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(EstadisticasPage);
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

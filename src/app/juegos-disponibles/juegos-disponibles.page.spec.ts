@@ -32,6 +32,7 @@ describe('JuegosDisponiblesPage', () => {
     fixture = TestBed.createComponent(JuegosDisponiblesPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   }));
 
   it('should create', () => {

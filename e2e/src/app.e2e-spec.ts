@@ -82,7 +82,6 @@ describe('navigation from manage',()=>{
     element(by.xpath("//ion-label[(text()= 'CREAR JUEGO')]")).click().then(_=>{
       expect(element(by.xpath("//ion-card-header")).getText()).toEqual('Crear juego')
     })
-    
   })
 })
 
@@ -94,9 +93,6 @@ describe('navigation from play',()=>{
 
   it('can go home',()=>{
     browser.get("/participar/juegosDisponibles");
-    //element(by.xpath("//ion-label[(text()= 'Inicio')]")).click()
-    //element(by.css('ion-icon[name=home]')).click()
-    //ion-buttons slot="end"
     element(by.css('ion-buttons[slot=end]')).click()
     browser.waitForAngular();
     expect(element(by.id('top')).isPresent()).toBeTruthy();

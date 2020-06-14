@@ -61,9 +61,9 @@ describe('Form LoginPage', () => {
 
     fixture = TestBed.createComponent(LoginPage);
     component = fixture.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture.detectChanges();
     component.ngOnInit()
-    //component.resetFields('create')
   }));
 
   it('check email', () => {

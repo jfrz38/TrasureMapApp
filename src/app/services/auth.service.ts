@@ -21,21 +21,21 @@ export class AuthService {
        err => reject(err))
    })
   }
-
+  
   doLogout(){ 
     return new Promise((resolve, reject) => {
-      if(this.isUser()===null) return resolve()
       this.afAuth.auth.signOut()
       .then(() => {
-          this.dbService.unsubscribeOnLogOut();
-          resolve();
+        this.dbService.unsubscribeOnLogOut();
+        resolve();
       }).catch((error) => {
+        console.log(error);
         reject();
       });
     })
   }
 
   isUser(){
-    return firebase.auth().currentUser;
+    return firebase.auth().currentUser === null ? false : true
   }
 }

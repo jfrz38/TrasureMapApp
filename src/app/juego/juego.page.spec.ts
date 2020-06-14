@@ -37,6 +37,7 @@ describe('JuegoPage', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(JuegoPage);
     component = fixture.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture.detectChanges();
   }));
 
@@ -67,6 +68,7 @@ describe('Form JuegoPage', () => {
 
     fixture = TestBed.createComponent(JuegoPage);
     component = fixture.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture.detectChanges();
     component.resetFields('create')
   }));

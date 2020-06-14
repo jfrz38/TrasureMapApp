@@ -28,6 +28,7 @@ describe('HomePage', () => {
 
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture.detectChanges();
   }));
 

@@ -16,11 +16,8 @@
   </ion-toolbar>
 </ion-header>
 
-<loading-bar *ngIf="showLoadIcon"></loading-bar>
-
-<ion-content  *ngIf="gamesCreated">
-  <div style="max-width: 75%;" *ngIf="gamesCreated.length==0; else mostrarResultados">
-
+<ion-content *ngIf="gamesCreated">
+  <div style="max-width: 75%;" *ngIf="emptyList; else mostrarResultados">
     <div class="pirata">
       <div class="speech-bubble">
         <ion-label color="light" style="font-weight: bold;">
@@ -34,7 +31,6 @@
         
       </div>
     </div>
-
   </div>
   <ng-template #mostrarResultados>
   <ion-item *ngFor="let game of gamesCreated" [routerLink]="['/juego','propio',game.id]">
@@ -44,6 +40,6 @@
     <ion-label>{{game.data.title}} - {{game.data.points}} puntos</ion-label>
     <ion-icon *ngIf=!isMobile name="arrow-forward" slot="end"></ion-icon>
   </ion-item>
-</ng-template>
+  </ng-template>
 </ion-content>
 

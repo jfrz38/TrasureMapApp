@@ -101,7 +101,7 @@ export class JuegoPage implements OnInit {
     this.id = this.activateRoute.snapshot.paramMap.get("id")
     console.log("id = " + this.id)
     if (this.type == 'create' || this.type == 'propio') {
-      if (this.id != '') {
+      if (this.id != '' && this.id !== null) {
         //propio
         this.getGameFromDB()
 
@@ -247,9 +247,10 @@ export class JuegoPage implements OnInit {
 
   createGame(gameToInsert) {
     this.dbservice.createGame(gameToInsert).then(_ => {
-      this.router.navigate(["/gestion"]).then(() => {
+      this.router.navigate(["/gestion"])
+      /*.then(() => {
         window.location.reload();
-      });
+      });*/
     }).catch(_ => {
       this.errorMessage = "No se ha podido crear el juego"
     })
@@ -257,9 +258,10 @@ export class JuegoPage implements OnInit {
 
   deleteGame() {
     this.dbservice.deleteGame(this.id).then(_ => {
-      this.router.navigate(["/gestion"]).then(() => {
+      this.router.navigate(["/gestion"])
+      /*.then(() => {
         window.location.reload();
-      });
+      });*/
     }).catch(_ => {
       this.errorMessage = "No se ha podido eliminar el juego"
     })

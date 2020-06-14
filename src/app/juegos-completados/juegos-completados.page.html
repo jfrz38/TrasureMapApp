@@ -14,7 +14,9 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <loading-bar *ngIf="showLoadIcon"></loading-bar>
+
 <ion-content *ngIf="gamesPlayed">
   <div style="max-width: 75%;" *ngIf="gamesPlayed.length==0; else mostrarResultados">
 

@@ -25,11 +25,11 @@ export class HomePage{
   }
 
   comprobarUser(){
-    return this.authService.isUser() === null ? false : true
+    return this.authService.isUser();
   }
 
   ionViewWillEnter(){
-    this.isUser=this.comprobarUser();
+    this.isUser=this.authService.isUser();
   }
 
 }

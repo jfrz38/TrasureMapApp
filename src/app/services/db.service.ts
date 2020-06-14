@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,20 +19,15 @@ export class DbService {
 
   getGamesCreated(id = null) {
     return new Promise<any>((resolve, reject) => {
-      
-      this.getUserData(id).then(snapshot => {
+      this.getUserData(id).then(user => {
         let games = []
-        snapshot.gamesCreated.forEach(async doc => {
-
-          games.push(doc.get().then(game => {
-            return new Promise<any>(res => {
-              const id = doc.id;
-              const data = game.data();
-              res({ id, data })
-            })
-          }))
+        user.gamesCreated.forEach(async doc => {
+          var game = await doc.get()
+          const id = doc.id;
+          const data = game.data();
+          games.push({id,data})
         });
-        resolve(Promise.all(games))
+        resolve(of(games))
       },err => {
         reject(err);
       })
@@ -89,10 +85,67 @@ export class DbService {
     })
   }
 
+/*
+  getGamesPlayed(id = null) {
+    return new Promise<any>((resolve, reject) => {
+      this.getUserData(id).then(user => {
+        let games = []
+        user.gamesPlayed.forEach(async doc => {
+          var played={date:'',score:0,game:{},response:[]}
+          played.date=doc.date;
+          played.score=doc.score;
+          played.response=doc.response
+          var game = await doc.reference.get();
+          played.game = game.data()
+          games.push(played)
+          --games.push(doc.reference.get().then(async game => {
+          --  return new Promise<any>(res => {
+          --    played.game = game.data()
+          --    res(played)
+          --  })
+          --}))
+        });
+        resolve(of(games))
+        //resolve(Promise.all(games))
+      },err => {
+        reject(err);
+      })
+    })
+  }
+
+  getGamesToPlay(id = null) {
+    //Coger todos los juegos existentes MENOS los que estén en user.gamesPlayed
+    return new Promise<any>(async (resolve, reject) => {
+      var gamesPlayed = await this.getGamesPlayed(id).catch(error=>{
+        return reject(error)
+      })
+      if(!gamesPlayed) return reject()
+      var totalGames = (await firebase.firestore().collection('games').get()).docs.map(doc => {
+        const id = doc.id;
+        const data = doc.data();
+        return { id, data }
+      })
+      var newArray = []
+      totalGames.forEach(total=>{
+        var exists = false;
+        gamesPlayed.forEach(played => {
+          if(played === undefined) return;
+          if (Object.entries(total.data).sort().toString() === 
+          Object.entries(played.game).sort().toString()) {
+            exists = true;
+            return;
+          }
+        });
+        if(!exists) newArray.push(total)
+      })
+      resolve(of(newArray))
+    })
+  }
+
+  */
   getUserData(id = null) {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.user.subscribe(currentUser => {
-        //if(currentUser === null && id === null) return reject()
         try{
           this.afs.collection('users').doc(id === null ? currentUser.uid : id).get().toPromise().then(doc => {
             resolve(doc.data())

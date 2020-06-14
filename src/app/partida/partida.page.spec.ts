@@ -34,6 +34,7 @@ describe('PartidaPage', () => {
 
     fixture = TestBed.createComponent(PartidaPage);
     component = fixture.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture.detectChanges();
   }));
 

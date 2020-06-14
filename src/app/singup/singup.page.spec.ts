@@ -58,6 +58,7 @@ describe('Form Singup', () => {
 
     fixture = TestBed.createComponent(SingupPage);
     component = fixture.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     fixture.detectChanges();
     component.ngOnInit()
     //component.resetFields('create')

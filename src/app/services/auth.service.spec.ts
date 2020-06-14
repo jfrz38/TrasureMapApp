@@ -43,12 +43,11 @@ describe('User functions:',()=>{
 
     it('should login success',async ()=>{
       await expectAsync(service.doLogin({email:'prueba@prueba.prueba',password:'prueba'})).toBeResolved()
-      service.doLogout()
     })
 
     it('user should exists after login',async ()=>{
       await service.doLogin({email:'prueba@prueba.prueba',password:'prueba'})
-      expect(service.isUser()).not.toBeNull()
+      expect(service.isUser()).toBeTruthy()
     })
 
 })

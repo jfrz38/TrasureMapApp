@@ -14,7 +14,7 @@ export class CalculatePointsService {
       }else if(this.isAdjacent(solution, response)){
         resolve(points*0.5)
       }else{
-        resolve(points*0)
+        resolve(0)
       }
     })
   }

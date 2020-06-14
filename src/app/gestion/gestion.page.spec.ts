@@ -12,6 +12,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
 
 describe('GestionPage', () => {
   let component: GestionPage;
@@ -32,6 +33,8 @@ describe('GestionPage', () => {
     fixture = TestBed.createComponent(GestionPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.ngOnInit()
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   }));
 
   it('should create', () => {
@@ -43,7 +46,7 @@ describe('GestionPage', () => {
   })
 
   it('empty list image',()=>{
-    component.gamesCreated=[]
+    component.route.data = of({})
     fixture.detectChanges()
     expect(fixture.debugElement.query(By.css('.imgPirata'))).not.toBeNull()
   })
@@ -60,10 +63,14 @@ describe('GestionPage', () => {
         bound: [0, 0]
       }
     }
+    
     component.gamesCreated = []
+    component.checkEmptyList()
     fixture.detectChanges()
     expect(fixture.debugElement.queryAll(By.css('ion-item')).length).toBe(0)
     component.gamesCreated.push(game)
+    component.checkEmptyList()
+    //component.emptyList = false;
     fixture.detectChanges()
     expect(fixture.debugElement.queryAll(By.css('ion-item')).length).toBe(1)
     component.gamesCreated.push(game)

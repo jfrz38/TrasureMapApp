@@ -9,6 +9,7 @@ import { GestionPageRoutingModule } from './gestion-routing.module';
 import { GestionPage } from './gestion.page';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { GestionResolverService } from './gestion-resolver.service';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     GestionPageRoutingModule
   ],
   declarations: [GestionPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [GestionResolverService]
 })
 export class GestionPageModule {}

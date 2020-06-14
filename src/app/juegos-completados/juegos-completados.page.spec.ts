@@ -24,12 +24,13 @@ describe('JuegosCompletadosPage', () => {
         AngularFirestoreModule, 
         AngularFireAuthModule, 
         AngularFireStorageModule,IonicModule.forRoot()],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(JuegosCompletadosPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   }));
 
   it('should create', () => {

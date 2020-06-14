@@ -33,7 +33,7 @@ describe('CalculatePointsService', () => {
   it('calculate 0% points', async ()=>{
     expect(await service.calculatePoints([4,4],[2,3],10)).toEqual(0)
     expect(await service.calculatePoints([7,8],[9,8],7487)).toEqual(0)
-    expect(await service.calculatePoints([80,10],[81,12],-3)).toEqual(-0)
+    expect(await service.calculatePoints([80,10],[81,12],-3)).toEqual(0)
     expect(await service.calculatePoints([0,-10],[0,-11],0)).toEqual(0)
   })
 });
