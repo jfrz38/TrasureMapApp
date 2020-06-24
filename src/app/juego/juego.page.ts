@@ -269,9 +269,9 @@ export class JuegoPage implements OnInit {
 
   editGame(gameToEdit) {
     this.dbservice.editGame(this.id, gameToEdit).then(_ => {
-      this.router.navigate(["/gestion"]).then(() => {
+      this.router.navigate(["/gestion"])/*.then(() => {
         window.location.reload();
-      });
+      });*/
     }).catch(_ => {
       this.errorMessage = "No se ha podido editar el juego"
     })

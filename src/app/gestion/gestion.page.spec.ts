@@ -48,6 +48,8 @@ describe('GestionPage', () => {
   it('empty list image',()=>{
     component.route.data = of({})
     fixture.detectChanges()
+    component.checkEmptyList();
+    console.log("el tamaño de la lista es: "+component.gamesCreated.length);
     expect(fixture.debugElement.query(By.css('.imgPirata'))).not.toBeNull()
   })
 

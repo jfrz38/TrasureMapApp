@@ -21,7 +21,7 @@ export class GestionPage implements OnInit {
 
   gamesCreated: Array<any>;
   isMobile: boolean = false;
-  emptyList = true;
+  emptyList = false;
 
   ngOnInit() {
 
@@ -29,6 +29,7 @@ export class GestionPage implements OnInit {
       this.getData();
     } else {
       this.gamesCreated = []
+      this.emptyList = true;
     }
   }
 
@@ -43,10 +44,10 @@ export class GestionPage implements OnInit {
         routeData['data'].pipe(take(1)).toPromise().then(data=>{
           this.gamesCreated = data;
           loading.dismiss();
-          this.checkEmptyList();
         })
       } else {
         this.gamesCreated = []
+        this.emptyList = true;
         loading.dismiss();
       }
     })

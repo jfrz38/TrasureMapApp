@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content *ngIf="gamesCreated">
-  <div style="max-width: 75%;" *ngIf="emptyList; else mostrarResultados">
+  <div style="max-width: 75%;" *ngIf="(gamesCreated$ | async)?.length==0 || emptyList; else mostrarResultados">
     <div class="pirata">
       <div class="speech-bubble">
         <ion-label color="light" style="font-weight: bold;">
